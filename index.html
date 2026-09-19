@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Timezone Converter</title>
+
+        <link rel="stylesheet" href="./dist/output.css" />
+        <script src="https://cdn.jsdelivr.net/npm/luxon@3/build/global/luxon.min.js" defer></script>
+        <script src="./src/main.js" defer></script>
+    </head>
+
+    <body class="min-h-screen bg-slate-100 flex items-center justify-center p-4">
+        <main class="w-full max-w-md bg-white rounded-xl shadow p-6 space-y-4">
+            <h1 class="text-2xl font-semibold">Timezone Converter</h1>
+
+            <div class="grid grid-cols-2 gap-3">
+                <label class="block">
+                    <span class="text-sm text-slate-600">Date</span>
+                    <input id="date" type="date" class="mt-1 w-full border border-slate-300 rounded p-2" />
+                </label>
+                <div class="block">
+                    <span class="text-sm text-slate-600">Time (24h)</span>
+                    <div class="mt-1 flex items-center gap-1">
+                        <select id="hour" aria-label="Hour" class="w-full border border-slate-300 rounded p-2"></select>
+                        <span class="font-semibold">:</span>
+                        <select id="minute" aria-label="Minute"
+                            class="w-full border border-slate-300 rounded p-2"></select>
+                    </div>
+                </div>
+            </div>
+
+            <label class="block">
+                <span class="text-sm text-slate-600">From timezone</span>
+                <select id="from-zone" class="mt-1 w-full border border-slate-300 rounded p-2"></select>
+            </label>
+
+            <label class="block">
+                <span class="text-sm text-slate-600">To timezone</span>
+                <select id="to-zone" class="mt-1 w-full border border-slate-300 rounded p-2"></select>
+            </label>
+
+            <div class="rounded-lg bg-slate-50 border border-slate-200 p-4 text-center">
+                <p id="result-time" class="text-4xl font-bold"></p>
+                <p id="result-detail" class="text-sm text-slate-500 mt-1"></p>
+            </div>
+        </main>
+    </body>
+
+</html>
