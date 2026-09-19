@@ -1,1 +1,47 @@
 @import "tailwindcss";
+
+/* Light theme = the defaults. Each --color-* becomes utilities:
+   bg-page, bg-card, text-ink, text-muted, border-line, bg-accent, ... */
+@theme {
+  --color-page: #f4f6fb;
+  --color-card: #ffffff;
+  --color-line: #e2e6f0;
+  --color-ink: #12172b;
+  --color-muted: #5b6482;
+  --color-accent: #4f46e5;
+  --color-accent-hover: #4338ca;
+  --color-accent-ink: #ffffff;
+}
+
+@layer base {
+  :root {
+    color-scheme: light;
+    --glow: rgb(79 70 229 / 0.14);
+  }
+
+  /* Dark theme = same names, different values */
+  .dark {
+    color-scheme: dark;
+    --color-page: #0b1020;
+    --color-card: #131a2e;
+    --color-line: #263050;
+    --color-ink: #e6e9f5;
+    --color-muted: #93a0c0;
+    --color-accent: #8b9bff;
+    --color-accent-hover: #a5b1ff;
+    --color-accent-ink: #0b1020;
+    --glow: rgb(139 155 255 / 0.18);
+  }
+
+  body {
+    background-image: radial-gradient(50rem 25rem at 50% -5%, var(--glow), transparent);
+    background-repeat: no-repeat;
+  }
+}
+
+@layer components {
+  .field {
+    @apply mt-1 w-full rounded-lg border border-line bg-card p-2 text-ink
+      focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/40;
+  }
+}

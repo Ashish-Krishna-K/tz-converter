@@ -10,6 +10,8 @@ const resultDetail = document.querySelector("#result-detail");
 const saveBtn = document.querySelector("#save-btn");
 const savedList = document.querySelector("#saved-list");
 const emptyMsg = document.querySelector("#empty-msg");
+const themeSelect = document.querySelector("#theme");
+const darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
 
 const userZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 const zones = [
@@ -112,7 +114,7 @@ function renderSaved() {
 
         const li = document.createElement("li");
         li.className =
-            "flex items-start justify-between gap-2 rounded border border-slate-200 p-3";
+            "flex items-start justify-between gap-2 rounded-lg border border-line bg-page p-3";
 
         const info = document.createElement("div");
         info.className = "text-sm";
@@ -122,7 +124,7 @@ function renderSaved() {
         main.textContent = `${source.toFormat("HH:mm")} ${entry.from} → ${converted.toFormat("HH:mm")} ${entry.to}`;
 
         const detail = document.createElement("p");
-        detail.className = "text-slate-500";
+        detail.className = "text-muted";
         detail.textContent = `${source.toFormat("dd LLL yyyy")} → ${converted.toFormat("ccc, dd LLL yyyy")} · ${converted.offsetNameShort}`;
 
         info.append(main, detail);
@@ -132,7 +134,7 @@ function renderSaved() {
         del.dataset.id = entry.id;
         del.textContent = "X";
         del.setAttribute("aria-label", "Delete saved conversion");
-        del.className = "text-slate-400 hover:text-red-600";
+        del.className = "cursor-pointer text-muted hover:text-red-500";
 
         li.append(info, del);
         savedList.append(li);
@@ -163,6 +165,38 @@ savedList.addEventListener("click", (event) => {
     saved = saved.filter((e) => e.id != btn.dataset.id);
     persist();
     renderSaved();
+});
+
+// ---------- Theme ----------
+const THEME_KEY = "tz-converter:theme";
+
+function getThemePref() {
+    try {
+        const pref = localStorage.getItem(THEME_KEY);
+        return ["system", "light", "dark"].includes(pref) ? pref : "system";
+    } catch (error) {
+        console.warn(error);
+        return "system";
+    }
+}
+
+function applyTheme(pref) {
+    const dark = pref === "dark" || (pref !== "light" && darkQuery.matches);
+    document.documentElement.classList.toggle("dark", dark);
+}
+
+themeSelect.value = getThemePref();
+
+themeSelect.addEventListener("change", () => {
+    try {
+        localStorage.setItem(THEME_KEY, themeSelect.value);
+    } catch {}
+    applyTheme(themeSelect.value);
+});
+
+// If the OS theme flips while the app is open, follow it (only in "system" mode)
+darkQuery.addEventListener("change", () => {
+    if (getThemePref() === "system") applyTheme("system");
 });
 
 renderSaved();
