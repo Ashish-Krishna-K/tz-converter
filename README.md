@@ -2,7 +2,7 @@
 
 A small, single-page web app for converting a date and time from one timezone to another. Built with vanilla JavaScript and Tailwind CSS, with no frontend framework and no build step for the JS.
 
-**Live demo:** _add your deployed link here_
+[Live Demo](https://ashish-krishna-k.github.io/tz-converter/)
 
 ## Features
 
